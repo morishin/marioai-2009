@@ -8,10 +8,10 @@ class MarioAgent:
     """
 
     def integrateObservation(self, obs):
-        raise "Not implemented"
+        raise Exception("Not implemented")
 
     def getAction(self):
-        raise "Not implemented"
+        raise Exception("Not implemented")
 
     def giveReward(self, reward):
         pass
@@ -32,5 +32,3 @@ class MarioAgent:
         return "<%s '%s'>" % (self.__class__.__name__, self.name)
     def newEpisode(self):
         pass
-
-

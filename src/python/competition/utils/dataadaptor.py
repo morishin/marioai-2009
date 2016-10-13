@@ -2,15 +2,15 @@ __author__ = "Sergey Karakovskiy, sergey at idsia fullstop ch"
 __date__ = "$Apr 30, 2009 1:53:54 PM$"
 
 import numpy
-    
-from bitsTest import powsof2
-    
+
+from .bitsTest import powsof2
+
 def show(el):
 #    powsof2 = (1, 2, 4, 8, 16, 32, 64, 128)
-    print "block (", el, ") :",
+    print("block (", el, ") :", end=' ')
     for  i in range(16):
-        print ((int(el) & powsof2[i])),
-    print
+        print(((int(el) & powsof2[i])), end=' ')
+    print()
 
 
 def decode(estate):
@@ -46,7 +46,7 @@ def decode(estate):
             col += 1
             if (totalBitsDecoded == 484):
                 break
-    print "totalBitsDecoded = ", totalBitsDecoded
+    print("totalBitsDecoded = ", totalBitsDecoded)
     return dstate, check_sum;
 
 
@@ -67,18 +67,18 @@ def extractObservation(data):
         check_sum_recv = int(data[34:])
 #        assert check_sum_got == check_sum_recv, "Error check_sum! got %d != etalon %d" % (check_sum_got, check_sum_recv)
         if check_sum_got != check_sum_recv:
-            print "Error check_sum! got %d != recv %d" % (check_sum_got, check_sum_recv)
+            print("Error check_sum! got %d != recv %d" % (check_sum_got, check_sum_recv))
 #        for i in range(22):
 #            for j in range(22):
 #               if levelScene[i, j] != 0:
 #                   print '1',
 #               else:
 #                   print ' ',
-#            print 
-        
+#            print
+
 #        enemies = decode(data[0][64:])
         return (mayMarioJump, isMarioOnGround, levelScene)
-    data = data.split(' ')
+    data = data.decode().split(' ')
     if (data[0] == 'FIT'):
         status = int(data[1])
         distance = float(data[2])
@@ -86,7 +86,7 @@ def extractObservation(data):
         marioMode = int(data[4])
         coins = int(data[5])
 #        print "S: %s, F: %s " % (data[1], data[2])
-        #print "status %s, dist %s, timeleft %s, mmode %s, coins %s" % (status, distance, timeLeft, marioMode, coins) 
+        #print "status %s, dist %s, timeleft %s, mmode %s, coins %s" % (status, distance, timeLeft, marioMode, coins)
         return status, distance, timeLeft, marioMode, coins
     elif(data[0] == 'O'):
         mayMarioJump = (data[1] == 'true')
@@ -99,19 +99,19 @@ def extractObservation(data):
                 k += 1
         k += 3
         marioFloats = (float(data[k]), float(data[k + 1]))
-        k += 2        
+        k += 2
         while k < len(data):
             enemiesFloats.append(float(data[k]))
             k += 1
-         
+
 #        for i in range(22):
 #            for j in range(22):
 #               if levelScene[i, j] != 0:
 #                   print 1,
 #               else:
 #                   print ' ',
-#            print 
-           
+#            print
+
         return (mayMarioJump, isMarioOnGround, marioFloats, enemiesFloats, levelScene, dummy)
     else:
-        raise "Wrong format or corrupted observation..."
+        raise Exception("Wrong format or corrupted observation...")

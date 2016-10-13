@@ -32,7 +32,7 @@ python src/python/competition/ipymario.py
 Run the following setup if necessary.
 
 ```sh
-virtualenv env #Use Python 2.7
+virtualenv env #Use Python 3
 source env/bin/activate
 pip install -r requirements.txt
 ```

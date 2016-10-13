@@ -18,39 +18,39 @@ def main():
     agent = ForwardAgent()
     task = MarioTask(agent.name, initMarioMode = 2)
     exp = EpisodicExperiment(task, agent)
-    print 'Task Ready'
+    print('Task Ready')
     exp.doEpisodes(2)
-    print 'mm 2:', task.reward
+    print('mm 2:', task.reward)
 
     task.env.initMarioMode = 1
     exp.doEpisodes(1)
-    print 'mm 1:', task.reward
+    print('mm 1:', task.reward)
     
     task.env.initMarioMode = 0
     exp.doEpisodes(1)
-    print 'mm 0:', task.reward
+    print('mm 0:', task.reward)
 
     task.env.initMarioMode = 0
     exp.doEpisodes(1)
-    print 'mm 0:', task.reward
+    print('mm 0:', task.reward)
     
     task.env.initMarioMode = 0
     task.env.levelDifficulty = 5
     exp.doEpisodes(1)
-    print 'mm 0, ld 5: ', task.reward
+    print('mm 0, ld 5: ', task.reward)
     
     task.env.initMarioMode = 1
     task.env.levelDifficulty = 5
     exp.doEpisodes(1)
-    print 'mm 1, ld 5: ', task.reward
+    print('mm 1, ld 5: ', task.reward)
 
     task.env.initMarioMode = 2
     task.env.levelDifficulty = 5
     exp.doEpisodes(1)
-    print 'mm 2, ld 5: ', task.reward
+    print('mm 2, ld 5: ', task.reward)
 
     
-    print "finished"
+    print("finished")
 
 #    clo = CmdLineOptions(sys.argv)
 #    task = MarioTask(MarioEnvironment(clo.getHost(), clo.getPort(), clo.getAgent().name))
@@ -60,4 +60,4 @@ def main():
 if __name__ == "__main__":
     main()
 else:
-    print "This is module to be run rather than imported."
+    print("This is module to be run rather than imported.")

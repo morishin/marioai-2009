@@ -2,7 +2,7 @@ import random
 __author__ = "Sergey Karakovskiy, sergey at idsia fullstop ch"
 __date__ = "$Apr 30, 2009 6:46:04 PM$"
 
-from marioagent import MarioAgent
+from .marioagent import MarioAgent
 
 class ForwardRandomAgent(MarioAgent):
     """
@@ -33,9 +33,9 @@ class ForwardRandomAgent(MarioAgent):
 
     def printObs(self):
         """for debug"""
-        print self.observation
+        print(self.observation)
 
 if __name__ != "__main__":
-    print "Importing %s " % __name__;
+    print("Importing %s " % __name__);
 else:
-    print "This is the module to import rather than run"
+    print("This is the module to import rather than run")

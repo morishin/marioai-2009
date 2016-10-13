@@ -32,9 +32,9 @@ class Client:
     def connectToServer(self, host, port):
         """connects to a server"""
         try:
-            print "Client: Trying to connect to %s:%s" % (host, port)
+            print("Client: Trying to connect to %s:%s" % (host, port))
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        except socket.error, msg:
+        except socket.error as msg:
             sys.stderr.write("[SOCKET CREATION ERROR1] %s\n" % msg[1])
             raise
 
@@ -42,37 +42,37 @@ class Client:
 #        print "Timeout set to 5"
         try:
             self.sock.connect((host, port))
-            print "Client: Connection to %s:%s succeeded!" % (host, port)
-            print "Client: Looking forward to receive greeting message..."
+            print("Client: Connection to %s:%s succeeded!" % (host, port))
+            print("Client: Looking forward to receive greeting message...")
             data = self.recvData()
-            print "Client: Greeting received: %s" % data
+            print("Client: Greeting received: %s" % data)
 
-        except socket.error, msg:
+        except socket.error as msg:
             sys.stderr.write("[CONNECTION ERROR] %s\n" % msg[1])
             raise
 
         GreatingMessage = "Client: Dear Server, hello! I am %s\r\n" % self.OwnerName
         self.sendData(GreatingMessage)
-        
+
 
 
 
     def printConnectionData(self):
         """Print to standard output the current connection data"""
-        print "Client: %s Connection Info: \r\nHost = %s, port = %d" % (self, self.Host, self.Port)
+        print("Client: %s Connection Info: \r\nHost = %s, port = %d" % (self, self.Host, self.Port))
 
     def disconnet(self):
         """disconnects from the server"""
-        print "Client is about to close the connection"
+        print("Client is about to close the connection")
         self.disconnected = True
         self.sock.close()
-        print "Connection closed"
+        print("Connection closed")
 
     def recvData(self):
         """receive arbitrary data from server"""
         try:
             return self.sock.recv(self.bufSize)
-        except  socket.error, msg:
+        except  socket.error as msg:
             sys.stderr.write("[SOCKET PIPE ERROR WHILE RECEIVING] %s\n.Possible reason: socket closed due to time out and/or requested server is currently busy" % msg[1])
             raise
 
@@ -80,8 +80,7 @@ class Client:
     def sendData(self, data):
         """send arbitrary string to server"""
         try:
-            self.sock.send(data)
-        except  socket.error, msg:
+            self.sock.send(data.encode())
+        except  socket.error as msg:
             sys.stderr.write("[SOCKET PIPE ERROR WHILE SENDING] %s\n" % msg[1])
             raise
-

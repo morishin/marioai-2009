@@ -2,10 +2,10 @@ __author__ = "Sergey Karakovskiy, sergey at idsia fullstop ch"
 __date__ = "$May 7, 2009 12:47:18 PM$"
 
 from client.marioenvironment import MarioEnvironment
-from episodictask import EpisodicTask
+from .episodictask import EpisodicTask
 
 if __name__ != "__main__":
-    print "Loading %s ..." % __name__;
+    print("Loading %s ..." % __name__);
 
 class MarioTask(EpisodicTask):
     """Encapsulates Mario specific options and transfers them to EpisodicTask"""

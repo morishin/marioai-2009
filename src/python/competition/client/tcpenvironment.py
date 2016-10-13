@@ -1,8 +1,8 @@
 __author__ = "Sergey Karakovskiy, sergey at idsia fullstop ch"
 __date__ = "$May 13, 2009 1:25:30 AM$"
 
-from client import Client
-from environment import Environment
+from .client import Client
+from .environment import Environment
 from utils.dataadaptor import show
 
 class TCPEnvironment(Environment):
@@ -13,7 +13,7 @@ class TCPEnvironment(Environment):
         self.host = host
         self.port = port
         if self.verbose:
-            print "TCPENV: agentName ", agentName
+            print("TCPENV: agentName ", agentName)
         self.client = Client(host, port, agentName)
         self.connected = True
 
@@ -22,21 +22,21 @@ class TCPEnvironment(Environment):
         return self.connected
 
     def to_unicode_or_bust(self, obj, encoding = 'utf-8'):
-        if isinstance(obj, basestring):
-            if not isinstance(obj, unicode):
-                obj = unicode(obj, encoding)
+        if isinstance(obj, str):
+            if not isinstance(obj, str):
+                obj = str(obj, encoding)
         return obj
 
     def getSensors(self):
         """ receives an observation via tcp connection"""
         #        print "Looking forward to receive data"
-        
+
         data = self.client.recvData()
         data = self.to_unicode_or_bust(data)
-                
+
         if data == "ciao":
             self.client.disconnect()
-            self.connected = False            
+            self.connected = False
         elif len(data) > 5:
         #        print data
 #            for i in range(31):
@@ -55,6 +55,6 @@ class TCPEnvironment(Environment):
             elif action[i] == 0:
                 actionStr += '0'
             else:
-                raise "something very dangerous happen...."
+                raise Exception("something very dangerous happen....")
         actionStr += "\r\n"
         self.client.sendData(actionStr)

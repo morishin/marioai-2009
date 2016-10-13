@@ -24,4 +24,4 @@ class Task(object):
 
     def getReward(self):
         """ compute and return the current reward (i.e. corresponding to the last action performed) """
-        raise "define method getReward()"
+        raise Exception("define method getReward()")

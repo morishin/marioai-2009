@@ -22,7 +22,7 @@ class Environment(object):
             @rtype: by default, this is assumed to be a numpy array of doubles
             @note: This function is abstract and has to be implemented.
         """
-        raise "Not implemented"
+        raise Exception("Not implemented")
 
     def performAction(self, action):
         """ perform an action on the world that changes it's internal state (maybe stochastically)
@@ -30,7 +30,7 @@ class Environment(object):
             @type action: by default, this is assumed to be a numpy array of doubles
             @note: This function is abstract and has to be implemented.
         """
-        raise "Not implemented"
+        raise Exception("Not implemented")
 
     def reset(self):
         """ Most environments will implement this optional method that allows for reinitialization.

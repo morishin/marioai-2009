@@ -1,7 +1,7 @@
 __author__ = "Sergey Karakovskiy, sergey at idsia fullstop ch"
 __date__ = "$May 12, 2009 11:18:19 PM$"
 
-from experiment import Experiment
+from .experiment import Experiment
 
 
 #class EpisodicExperiment(Experiment):
@@ -23,7 +23,7 @@ from experiment import Experiment
 #        return all_rewards
 
 
-from experiment import Experiment
+from .experiment import Experiment
 
 class EpisodicExperiment(Experiment):
     """ The extension of Experiment to handle episodic tasks. """

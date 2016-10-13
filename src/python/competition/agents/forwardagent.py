@@ -2,7 +2,7 @@ import numpy
 __author__ = "Sergey Karakovskiy, sergey at idsia fullstop ch"
 __date__ = "$May 1, 2009 2:46:34 AM$"
 
-from marioagent import MarioAgent
+from .marioagent import MarioAgent
 
 class ForwardAgent(MarioAgent):
     """ In fact the Python twin of the
@@ -52,15 +52,15 @@ class ForwardAgent(MarioAgent):
         Just substitue getAction by this method and see how it behaves.
         """
         if (self.mayMarioJump):
-                    print "m: %d, %s, %s, 12: %d, 13: %d, j: %d" \
+                    print("m: %d, %s, %s, 12: %d, 13: %d, j: %d" \
             % (self.levelScene[11, 11], self.mayMarioJump, self.isMarioOnGround, \
-            self.levelScene[11, 12], self.levelScene[11, 12], self.trueJumpCounter)
+            self.levelScene[11, 12], self.levelScene[11, 12], self.trueJumpCounter))
         else:
             if self.levelScene == None:
-                print "Bad news....."
-            print "m: %d, 12: %d, 13: %d, j: %d" \
+                print("Bad news.....")
+            print("m: %d, 12: %d, 13: %d, j: %d" \
                 % (self.levelScene[11, 11], \
-                self.levelScene[11, 12], self.levelScene[11, 12], self.trueJumpCounter)
+                self.levelScene[11, 12], self.levelScene[11, 12], self.trueJumpCounter))
 
         a = numpy.zeros(5, int)
         a[1] = 1
@@ -90,10 +90,10 @@ class ForwardAgent(MarioAgent):
             elif a[i] == 0:
                 actionStr += '0'
             else:
-                print "something very dangerous happen...."
+                print("something very dangerous happen....")
 
         actionStr += "\r\n"
-        print "action: " , actionStr
+        print("action: " , actionStr)
         return actionStr
 
     def getAction(self):
@@ -138,7 +138,7 @@ class ForwardAgent(MarioAgent):
             for y in range(22):
                 tmpData += self.mapElToStr(self.levelScene[x][y]);
             ret += "\n%s" % tmpData;
-        print ret
+        print(ret)
 
     def mapElToStr(self, el):
         """maps element of levelScene to str representation"""
@@ -152,4 +152,4 @@ class ForwardAgent(MarioAgent):
 
     def printObs(self):
         """for debug"""
-        print repr(self.observation)
+        print(repr(self.observation))

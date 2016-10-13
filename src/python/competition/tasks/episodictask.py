@@ -1,7 +1,7 @@
 __author__="Sergey Karakovskiy, sergey at idsia fullstop ch"
 __date__ ="$May 12, 2009 11:46:44 PM$"
 
-from task import Task
+from .task import Task
 
 class EpisodicTask(Task):
     """
@@ -24,7 +24,7 @@ class EpisodicTask(Task):
 
     def isFinished(self):
         """ is the current episode over? """
-        raise "Implement method isFinished()"
+        raise Exception("Implement method isFinished()")
 
     def performAction(self, action):
         Task.performAction(self, action)
@@ -39,4 +39,3 @@ class EpisodicTask(Task):
     def getTotalReward(self):
         """ the accumulated reward since the start of the episode """
         return self.cumReward
-

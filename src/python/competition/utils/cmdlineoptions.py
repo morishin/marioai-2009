@@ -7,9 +7,9 @@ __author__="Sergey Karakovskiy, sergey at idsia fullstop ch"
 __date__ ="$May 13, 2009 3:44:46 AM$"
 
 if __name__ == "__main__":
-    print "This is a module to be imported rather than run";
+    print("This is a module to be imported rather than run");
 else:
-    print "Importing %s ..." % __name__
+    print("Importing %s ..." % __name__)
 
 class CmdLineOptions:
     """
@@ -25,8 +25,8 @@ class CmdLineOptions:
         """Constructor"""
         try:
             opts, _ = getopt.getopt(argv[1:], "pa", ["port=", "agent="])
-        except getopt.GetoptError, err:
-            print str(err)
+        except getopt.GetoptError as err:
+            print(str(err))
             self.usage()
             sys.exit(2)
         agentName = "ForwardAgent" # by default.
@@ -47,7 +47,7 @@ class CmdLineOptions:
             assert  False, "unknown Agent"
 
     def usage():
-        print "python iPyMario.py [--port port][--agent AgentName]"
+        print("python iPyMario.py [--port port][--agent AgentName]")
 
     def getHost(self):
         """returns default host 'localhost'"""
