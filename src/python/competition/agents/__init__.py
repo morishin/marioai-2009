@@ -4,4 +4,4 @@ __date__ ="$May 13, 2009 12:16:29 AM$"
 from .forwardagent import ForwardAgent
 from .forwardrandomagent import ForwardRandomAgent
 from .marioagent import MarioAgent
-
+from .myagent import *

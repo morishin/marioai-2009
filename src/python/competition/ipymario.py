@@ -5,7 +5,7 @@ import sys
 
 from experiments.episodicexperiment import EpisodicExperiment
 from tasks.mariotask import MarioTask
-from agents.myagent import MyAgent
+from agents.myagent import *
 
 
 #from pybrain.... episodic import EpisodicExperiment
@@ -14,7 +14,8 @@ from agents.myagent import MyAgent
 # send creatures.
 
 def main():
-    agent = MyAgent()
+    rand_individual = Individual(random=True)
+    agent = MyAgent(rand_individual)
     task = MarioTask(agent.name, initMarioMode = 2)
     exp = EpisodicExperiment(task, agent)
     print('Task Ready')

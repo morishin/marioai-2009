@@ -18,21 +18,29 @@ java -classpath classes ch.idsia.scenarios.Play ch.idsia.ai.agents.ai.ForwardAge
 ```
 
 ### Client / Server Control via TCP
-Sever
+Sever (Java)
 
 ```sh
 java -classpath classes ch.idsia.scenarios.MainRun -server on
 ```
-Client
+Client (Python)
 
 ```sh
 python src/python/competition/ipymario.py
 ```
 
-Run the following setup if necessary.
+Run the following setup before exec if necessary.
 
+## Develop
+### Setup
 ```sh
-virtualenv env #Use Python 3
+virtualenv env # Use Python 3
 source env/bin/activate
 pip install -r requirements.txt
+```
+
+### Test
+```sh
+cd src/python/competition
+green tests
 ```
