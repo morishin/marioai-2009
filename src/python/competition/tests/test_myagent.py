@@ -28,6 +28,8 @@ class TestMyAgent(unittest.TestCase):
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     ]
+    isMarioOnGround = True
+    mayMarioJump = True
 
     def test_levelscene_is_obstacle(self):
         self.assertFalse(LevelScene.is_obstacle(LevelSceneCode.nothing))
@@ -38,12 +40,12 @@ class TestMyAgent(unittest.TestCase):
 
     def test_individual_gene_index_from_levelscene(self):
         individual = Individual()
-        gene_index = individual.gene_index_from_levelscene(self.sample_levelscene)
+        gene_index = individual.gene_index_from_levelscene(self.sample_levelscene, self.isMarioOnGround, self.mayMarioJump)
         self.assertTrue(gene_index < Individual.length)
 
     def test_individual_action(self):
         individual = Individual()
-        action = individual.action(self.sample_levelscene)
+        action = individual.action(self.sample_levelscene, self.isMarioOnGround, self.mayMarioJump)
         self.assertTrue(action == [0] * Individual.gene_size.bit_length())
 
 

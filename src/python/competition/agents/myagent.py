@@ -21,13 +21,13 @@ class LevelScene(object):
 
 
 class Individual(object):
-    length = 2**16
+    length = 2**9
     gene_size = 2**5
 
     def __init__(self, random=False):
         self.data = numpy.random.randint(Individual.gene_size, size=self.length) if random else numpy.zeros(self.length, int)
 
-    def gene_index_from_levelscene(self, levelscene):
+    def gene_index_from_levelscene(self, levelscene, isMarioOnGround, mayMarioJump):
         near_cells = [
             levelscene[10][10],
             levelscene[10][11],
@@ -37,11 +37,13 @@ class Individual(object):
             levelscene[12][10],
             levelscene[12][12]
         ]
-        return int(''.join(map(lambda cell: '1' if LevelScene.is_obstacle(cell) else '0', near_cells)), 2)
+        cells_info = list(map(lambda cell: '1' if LevelScene.is_obstacle(cell) else '0', near_cells))
+        mario_info = [str(int(isMarioOnGround)), str(int(mayMarioJump))]
+        return int(''.join(cells_info + mario_info), 2)
 
-    def action(self, levelscene):
+    def action(self, levelscene, isMarioOnGround, mayMarioJump):
         fmt = '{0:0' + str(Individual.gene_size.bit_length()) + 'b}'
-        digits = fmt.format(self.data[self.gene_index_from_levelscene(levelscene)])
+        digits = fmt.format(self.data[self.gene_index_from_levelscene(levelscene, isMarioOnGround, mayMarioJump)])
         return list(map(lambda d: int(d), digits))
 
 
@@ -61,9 +63,10 @@ class MyAgent(MarioAgent):
         self.action = numpy.zeros(5, int)
 
     def getAction(self):
-        return self.individual.action(self.levelScene)
+        return self.individual.action(self.levelScene, self.isMarioOnGround, self.mayMarioJump)
 
     def integrateObservation(self, obs):
+        print(obs)
         if (len(obs) != 6):
             pass # Episode is over
         else:
