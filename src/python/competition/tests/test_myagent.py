@@ -1,6 +1,7 @@
 import unittest
 
 from agents.myagent import *
+from ga.individual import *
 
 
 class TestMyAgent(unittest.TestCase):
