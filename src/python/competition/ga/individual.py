@@ -23,8 +23,8 @@ class Individual(object):
     length = 2**9
     gene_size = 2**5
 
-    def __init__(self, random=False):
-        self.data = numpy.random.randint(Individual.gene_size, size=self.length) if random else numpy.zeros(self.length, int)
+    def __init__(self, data=None, random=False):
+        self.data = data if data is not None else numpy.random.randint(Individual.gene_size, size=self.length) if random else numpy.zeros(self.length, int)
 
     def gene_index_from_levelscene(self, levelscene, isMarioOnGround, mayMarioJump):
         near_cells = [

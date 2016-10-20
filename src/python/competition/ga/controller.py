@@ -1,9 +1,11 @@
 import numpy
+from ga.individual import Individual
 
 class Controller(object):
     @classmethod
     def select(cls, individuals, probabilities):
-        return numpy.random.choice(individuals, size=2, replace=False, p=probabilities)
+        normalized_probabolities = numpy.array(probabilities) / sum(probabilities)
+        return numpy.random.choice(individuals, size=2, replace=False, p=normalized_probabolities)
 
     @classmethod
     def two_points_cross(cls, individual1, individual2, indices=None):
@@ -20,4 +22,4 @@ class Controller(object):
             individual1.data[indices[0]:indices[1]],
             individual2.data[indices[1]:]))
 
-        return (child1, child2)
+        return (Individual(data=child1), Individual(data=child2))

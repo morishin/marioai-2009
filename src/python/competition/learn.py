@@ -4,8 +4,9 @@ __date__ = "$Apr 30, 2009 1:46:32 AM$"
 import sys
 
 from experiments.episodicexperiment import EpisodicExperiment
-from tasks.singlemariotask import SingleMarioTask
+from tasks.mariotask import MarioTask
 from agents.myagent import *
+from ga.controller import Controller
 
 
 #from pybrain.... episodic import EpisodicExperiment
@@ -21,19 +22,46 @@ class IndividualReward:
     def __str__(self):
         return str(self.reward)
 
-def main():
-    n_individuals = 10
-    initial_group = [Individual(random=True) for i in range(n_individuals)]
+
+def make_next_generation(experiment, individuals):
+    n_individuals = len(individuals)
+
     rewards = []
-    for individual in initial_group:
-        agent = MyAgent(individual)
-        task = SingleMarioTask(agent.name)
-        task.env.initMarioMode = 2
-        task.env.levelDifficulty = 0
-        exp = EpisodicExperiment(task, agent)
-        exp.doEpisodes(1)
-        rewards.append(IndividualReward(individual, task.reward))
-        print("reward: {0}".format(task.reward))
+    for individual in individuals:
+        experiment.agent.individual = individual
+        experiment.doEpisodes(1)
+        rewards.append(IndividualReward(individual, experiment.task.reward))
+        print("reward: {0}".format(experiment.task.reward))
+    numberOfElites = 1
+    sorted_rewards = sorted(rewards, key=lambda individual_reward: individual_reward.reward, reverse=True)
+    print("best reward: {0}".format(sorted_rewards[0].reward))
+    elite_individuals = list(map(lambda e: e.individual, sorted_rewards[:numberOfElites]))
+    next_individuals = elite_individuals
+    while len(next_individuals) < n_individuals:
+        father, mother = Controller.select(list(map(lambda individual_reward: individual_reward.individual, rewards)),
+                                           list(map(lambda individual_reward: individual_reward.reward, rewards)))
+        child1, child2 = Controller.two_points_cross(father, mother)
+        next_individuals.append(child1)
+        next_individuals.append(child2)
+    next_individuals = next_individuals[:n_individuals]
+    return next_individuals
+
+
+def main():
+    agent = MyAgent(None)
+    task = MarioTask(agent.name)
+    task.env.initMarioMode = 2
+    task.env.levelDifficulty = 0
+    experiment = EpisodicExperiment(task, agent)
+
+    n_individuals = 10
+    initial_individuals = [Individual(random=True) for i in range(n_individuals)]
+    current_individuals = initial_individuals
+    n_generations = 10
+    for generation in range(n_generations):
+        print("generation #{0} playing...".format(generation))
+        current_individuals = make_next_generation(experiment, current_individuals)
+
 
 if __name__ == "__main__":
     main()
