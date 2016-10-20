@@ -4,7 +4,7 @@ __date__ = "$Apr 30, 2009 1:46:32 AM$"
 import sys
 
 from experiments.episodicexperiment import EpisodicExperiment
-from tasks.mariotask import MarioTask
+from tasks.singlemariotask import SingleMarioTask
 from agents.myagent import *
 
 
@@ -27,23 +27,13 @@ def main():
     rewards = []
     for individual in initial_group:
         agent = MyAgent(individual)
-        task = MarioTask(agent.name)
+        task = SingleMarioTask(agent.name)
         task.env.initMarioMode = 2
         task.env.levelDifficulty = 0
         exp = EpisodicExperiment(task, agent)
         exp.doEpisodes(1)
         rewards.append(IndividualReward(individual, task.reward))
-        # for disconnecting client socket
-        del(task)
-        del(agent)
-        del(exp)
-    for r in rewards:
-        print(r)
-
-#    clo = CmdLineOptions(sys.argv)
-#    task = MarioTask(MarioEnvironment(clo.getHost(), clo.getPort(), clo.getAgent().name))
-#    exp = EpisodicExperiment(clo.getAgent(), task)
-#    exp.doEpisodes(3)
+        print("reward: {0}".format(task.reward))
 
 if __name__ == "__main__":
     main()
