@@ -23,3 +23,16 @@ class Controller(object):
             individual2.data[indices[1]:]))
 
         return (Individual(data=child1), Individual(data=child2))
+
+    @classmethod
+    def mutate(cls, individuals, mutation_rate=0.1):
+        n_mutation = int(numpy.ceil(len(individuals) * mutation_rate))
+        individuals_to_mutate = numpy.random.choice(individuals, size=n_mutation, replace=False)
+        for individual in individuals_to_mutate:
+            for i in range(int(len(individual.data) * mutation_rate)):
+                index1 = numpy.random.randint(0, len(individual.data) - 1)
+                index2 = numpy.random.randint(index1, len(individual.data))
+                buf1 = individual.data[index1]
+                buf2 = individual.data[index2]
+                individual.data[index1] = buf2
+                individual.data[index2] = buf1

@@ -44,6 +44,7 @@ def make_next_generation(experiment, individuals):
         next_individuals.append(child1)
         next_individuals.append(child2)
     next_individuals = next_individuals[:n_individuals]
+    Controller.mutate(next_individuals)
     return next_individuals
 
 
