@@ -63,6 +63,7 @@ def main():
     n_generations = 100
     for generation in range(n_generations):
         print("generation #{0} playing...".format(generation))
+        task.env.visualization = generation % 10 == 0
         current_individuals = make_next_generation(experiment, current_individuals)
         save(current_individuals)
 
