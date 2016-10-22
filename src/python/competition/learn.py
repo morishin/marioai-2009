@@ -2,6 +2,7 @@ __author__ = "Sergey Karakovskiy, sergey at idsia dot ch"
 __date__ = "$Apr 30, 2009 1:46:32 AM$"
 
 import sys
+import pickle
 
 from experiments.episodicexperiment import EpisodicExperiment
 from tasks.mariotask import MarioTask
@@ -56,12 +57,26 @@ def main():
     experiment = EpisodicExperiment(task, agent)
 
     n_individuals = 10
-    initial_individuals = [Individual(random=True) for i in range(n_individuals)]
+    # initial_individuals = [Individual(random=True) for i in range(n_individuals)]
+    initial_individuals = load()
     current_individuals = initial_individuals
-    n_generations = 10
+    n_generations = 100
     for generation in range(n_generations):
         print("generation #{0} playing...".format(generation))
         current_individuals = make_next_generation(experiment, current_individuals)
+        save(current_individuals)
+
+
+def save(individuals):
+    l = list(map(lambda x: x.to_list(), individuals))
+    with open("individuals", "wb") as f:
+        pickle.dump(l, f)
+
+
+def load():
+    with open("individuals", "rb") as f:
+        l = pickle.load(f)
+        return list(map(lambda x: Individual.from_list(x), l))
 
 
 if __name__ == "__main__":

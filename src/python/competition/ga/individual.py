@@ -26,6 +26,13 @@ class Individual(object):
     def __init__(self, data=None, random=False):
         self.data = data if data is not None else numpy.random.randint(Individual.gene_size, size=self.length) if random else numpy.zeros(self.length, int)
 
+    def to_list(self):
+        return list(self.data)
+
+    @classmethod
+    def from_list(cls, lst):
+        return Individual(data=numpy.array(lst))
+
     def gene_index_from_levelscene(self, levelscene, isMarioOnGround, mayMarioJump):
         near_cells = [
             levelscene[10][10],

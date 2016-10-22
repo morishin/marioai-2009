@@ -2,6 +2,7 @@
 evolved.xml
 *.jar
 !jdom.jar
+individuals
 
 # Created by https://www.gitignore.io/api/python,java,osx
 
