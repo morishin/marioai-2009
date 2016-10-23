@@ -2,6 +2,7 @@ __author__ = "Sergey Karakovskiy, sergey at idsia dot ch"
 __date__ = "$Apr 30, 2009 1:46:32 AM$"
 
 import sys
+import os.path
 import pickle
 
 from experiments.episodicexperiment import EpisodicExperiment
@@ -45,7 +46,7 @@ def make_next_generation(experiment, individuals):
         next_individuals.append(child1)
         next_individuals.append(child2)
     next_individuals = next_individuals[:n_individuals]
-    Controller.mutate(next_individuals)
+    Controller.mutate(next_individuals, mutation_rate=0.3)
     return next_individuals
 
 
@@ -53,29 +54,32 @@ def main():
     agent = MyAgent(None)
     task = MarioTask(agent.name)
     task.env.initMarioMode = 2
-    task.env.levelDifficulty = 0
+    task.env.levelDifficulty = int(sys.argv[1]) if len(sys.argv) == 2 else 0
     experiment = EpisodicExperiment(task, agent)
 
     n_individuals = 10
-    # initial_individuals = [Individual(random=True) for i in range(n_individuals)]
-    initial_individuals = load()
+    filename = "learned_individuals_{0}".format(task.env.levelDifficulty)
+    if os.path.exists(filename):
+        initial_individuals = load(filename)
+    else:
+        initial_individuals = [Individual(random=True) for i in range(n_individuals)]
     current_individuals = initial_individuals
     n_generations = 100
     for generation in range(n_generations):
         print("generation #{0} playing...".format(generation))
         task.env.visualization = generation % 10 == 0
         current_individuals = make_next_generation(experiment, current_individuals)
-        save(current_individuals)
+        save(current_individuals, filename)
 
 
-def save(individuals):
+def save(individuals, filename):
     l = list(map(lambda x: x.to_list(), individuals))
-    with open("individuals", "wb") as f:
+    with open(filename, "wb") as f:
         pickle.dump(l, f)
 
 
-def load():
-    with open("individuals", "rb") as f:
+def load(filename):
+    with open(filename, "rb") as f:
         l = pickle.load(f)
         return list(map(lambda x: Individual.from_list(x), l))
 
