@@ -1,20 +1,12 @@
-__author__ = "Sergey Karakovskiy, sergey at idsia dot ch"
-__date__ = "$Apr 30, 2009 1:46:32 AM$"
-
-import sys
 import os.path
 import pickle
+import sys
 
-from experiments.episodicexperiment import EpisodicExperiment
-from tasks.mariotask import MarioTask
 from agents.myagent import *
+from experiments.episodicexperiment import EpisodicExperiment
 from ga.controller import Controller
+from tasks.mariotask import MarioTask
 
-
-#from pybrain.... episodic import EpisodicExperiment
-#TODO: reset sends: vis, diff=, lt=, ll=, rs=, mariomode, time limit, pw,
-# with creatures, without creatures HIGH.
-# send creatures.
 
 class IndividualReward:
     def __init__(self, individual, reward):
